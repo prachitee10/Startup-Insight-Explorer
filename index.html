@@ -4,7 +4,204 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Startup Insight Explorer</title>
-    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ffe5ec; /* Lovely soft pastel pink */
+            background-image: radial-gradient(#ffb3c6 10%, transparent 10%),
+                              radial-gradient(#ffb3c6 10%, transparent 10%);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: #4a4a4a; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 30px;
+            position: relative;
+        }
+
+        /* Big Cute Bows in the Corners */
+        body::before {
+            content: "🎀";
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        body::after {
+            content: "🎀";
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+
+        /* Main Container Wrapper */
+        .main-wrapper {
+            width: 100%;
+            max-width: 900px; 
+            background-color: #ffffff; 
+            border: 3px solid #ffb3c6; 
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 8px 20px rgba(255, 179, 198, 0.4);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .main-header h1 {
+            color: #ff758f; 
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .main-header p {
+            color: #ffb3c6;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        /* 3-Column Stats Row Layout */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: #fff0f3; 
+            border: 2px dashed #ffb3c6; 
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.02);
+        }
+
+        .stat-card h3 {
+            color: #ff758f;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card p {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff4d6d;
+            margin-top: 5px;
+        }
+
+        /* Single Column Workspace Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        /* Panel Sections */
+        .panel-section {
+            background-color: #fff0f3;
+            border: 2px solid #ffb3c6;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .panel-section h2 {
+            color: #ff758f;
+            font-size: 1.35rem;
+            margin-bottom: 5px;
+        }
+
+        .panel-desc {
+            font-size: 0.85rem;
+            color: #8a8a8a;
+            margin-bottom: 20px;
+        }
+
+        /* Chat Window Display Box */
+        .display-box {
+            background-color: #ffffff;
+            border: 2px solid #ffb3c6;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 250px;
+            max-height: 450px;
+            overflow-y: auto; 
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+
+        .placeholder-text {
+            color: #b5b5b5;
+            font-style: italic;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Input Fields and Buttons */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 14px;
+            background-color: #ffffff;
+            border: 2px solid #ffb3c6;
+            border-radius: 10px;
+            color: #4a4a4a;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #ff758f;
+        }
+
+        button {
+            padding: 14px 28px;
+            background-color: #ff758f; 
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 117, 143, 0.3);
+        }
+
+        button:hover {
+            background-color: #ff4d6d;
+        }
+
+        @media (max-width: 600px) {
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
