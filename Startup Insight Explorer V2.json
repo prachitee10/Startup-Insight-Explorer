@@ -1,0 +1,204 @@
+{
+  "name": "Startup Insight Explorer V2",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/category/startups/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        -96
+      ],
+      "id": "2731b12e-ed0a-470c-b13a-0a96996a624f",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze these startup news articles:\n\n{{ JSON.stringify($json) }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are a Startup Funding Research Agent.\n\nAnalyze the provided startup news articles and return the result in EXACTLY this format:\n\n# STARTUP FUNDING REPORT                                                       Keep the final report under 1500 characters.\nSummarize funding events briefly.\nLimit to the top 5 funding events.\n\n## Funding Events\n\n### Event 1\nStartup Name:\nFunding Amount:\nFunding Round:\nInvestors:\nIndustry:\nSummary:\n\n### Event 2\nStartup Name:\nFunding Amount:\nFunding Round:\nInvestors:\nIndustry:\nSummary:\n\n## Funding Statistics\nTotal Funding Events:\nMost Active Sector:\nKey Funding Trends:\n\nRules:\n- If information is missing, write \"Not Mentioned\".\n- Always use headings and bullet points.\n- Return a clean, structured report.\n- Do not ask for more information."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        592,
+        -96
+      ],
+      "id": "79badaaf-e918-4eef-82a7-dbd0af91eda3",
+      "name": "AI Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        464,
+        128
+      ],
+      "id": "8bd5e253-4fc5-47cc-900d-28075f2308ea",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "IdKdnVPY1WRXTvj4",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        368,
+        -96
+      ],
+      "id": "5e2c4ac4-092d-4bf7-bcef-a28e3de5f20a",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "path": "live-tech-report",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        32
+      ],
+      "id": "fa461bb4-762d-47db-ba85-6245a8375313",
+      "name": "Webhook",
+      "webhookId": "c9fd9600-2f2b-48f9-9a20-64b35b5c5d77"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        944,
+        -96
+      ],
+      "id": "f5a1dcd8-2836-425e-b30c-15c2bf9649f5",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        -96
+      ],
+      "id": "c69efcc1-6faf-46af-9bb5-125f2ad12807",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "95cf4c00-d3a4-4db8-8de1-3dd64d0f7d46",
+  "meta": {
+    "instanceId": "d11329001df0277455836fd0fcc5f10a2d28a2fa77d2ca073fc95f8c06103256"
+  },
+  "nodeGroups": [],
+  "id": "gD0ylUuTqtTxznGC",
+  "tags": []
+}
