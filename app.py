@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
 import requests
 
-app = Flask(__name__)
+# Fixed line: telling Flask to look for html/css/js in the main directory
+app = Flask(__name__, template_folder='.', static_folder='.')
 
 N8N_CHATBOT_URL = "https://prachitee10.app.n8n.cloud/webhook/37030a1e-7f1a-4a38-bff2-b73a353212c4"
 
