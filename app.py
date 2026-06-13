@@ -3,6 +3,7 @@ import requests
 import os
 
 app = Flask(__name__, template_folder='.', static_folder='.', static_url_path='')
+
 N8N_CHATBOT_URL = "https://prachitee10.app.n8n.cloud/webhook/37030a1e-7f1a-4a38-bff2-b73a353212c4"
 
 @app.route("/")
@@ -18,9 +19,10 @@ def ask_ai():
     except Exception as e:
         return f"Error: {str(e)}"
 
-@app.route("/script.js")
-def serve_js():
-    return send_from_directory(os.path.abspath("."), "script.js")
+# Serve CSS and JS files from the root
+@app.route("/<path:filename>")
+def serve_static(filename):
+    return send_from_directory(".", filename)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
