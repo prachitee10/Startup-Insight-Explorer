@@ -1,40 +1,22 @@
 document.getElementById("askBtn").addEventListener("click", async function () {
-    const questionElement = document.getElementById("question");
+    const question = document.getElementById("question").value;
     const reportElement = document.getElementById("report");
-    const question = questionElement.value;
+    if (!question) return;
 
-    if (!question) {
-        reportElement.innerHTML = "<p style='color: #ff4d6d; font-weight: bold;'>Please type a question first!</p>";
-        return;
-    }
-
-    reportElement.innerHTML = `
-        <p><strong>💝 You asked:</strong> ${question}</p>
-        <p style='color: #ff758f; font-style: italic; margin-top: 10px;'>Thinking...</p>
-    `;
-
+    reportElement.innerHTML = "Thinking...";
+    
     try {
-        // FIXED: Changed to POST method and added body data
+        const formData = new URLSearchParams();
+        formData.append('q', question);
+
         const response = await fetch('/ask', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `q=${encodeURIComponent(question)}`
+            body: formData
         });
         
         const data = await response.text();
-
-        reportElement.innerHTML = `
-            <p><strong>💝 You asked:</strong> ${question}</p>
-            <div class="ai-answer" style="margin-top: 15px; padding: 12px; background: #fff5f8; border-left: 4px solid #ff758f; border-radius: 4px;">
-                ${data}
-            </div>
-        `;
-        
-        questionElement.value = "";
-
+        reportElement.innerHTML = data;
     } catch (error) {
-        reportElement.innerHTML = `<p style='color: #ff4d6d;'>Error: ${error.message}</p>`;
+        reportElement.innerHTML = "Error connecting to backend.";
     }
 });
