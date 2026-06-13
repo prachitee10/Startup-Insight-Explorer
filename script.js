@@ -4,19 +4,13 @@ document.getElementById("askBtn").addEventListener("click", async function () {
     if (!question) return;
 
     reportElement.innerHTML = "Thinking...";
-    
-    try {
-        const formData = new URLSearchParams();
-        formData.append('q', question);
+    const formData = new URLSearchParams();
+    formData.append('q', question);
 
-        const response = await fetch('/ask', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const data = await response.text();
-        reportElement.innerHTML = data;
-    } catch (error) {
-        reportElement.innerHTML = "Error connecting to backend.";
+    try {
+        const response = await fetch('/ask', { method: 'POST', body: formData });
+        reportElement.innerHTML = await response.text();
+    } catch (e) {
+        reportElement.innerHTML = "Error connecting to AI.";
     }
 });
