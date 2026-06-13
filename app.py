@@ -1,10 +1,7 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request
 import requests
-import os
 
-app = Flask(__name__, template_folder='.', static_folder='.')
-
-N8N_CHATBOT_URL = "https://prachitee10.app.n8n.cloud/webhook/37030a1e-7f1a-4a38-bff2-b73a353212c4"
+app = Flask(__name__, template_folder='.')
 
 @app.route("/")
 def index():
@@ -12,16 +9,14 @@ def index():
 
 @app.route("/ask", methods=['POST'])
 def ask_ai():
-    user_query = request.form.get("q", "")
+    data = request.get_json()
     try:
-        response = requests.post(N8N_CHATBOT_URL, json={"query": user_query}, timeout=30)
-        return response.text
+        # Sedha JSON bhej rahe hain n8n ko
+        res = requests.post("https://prachitee10.app.n8n.cloud/webhook/37030a1e-7f1a-4a38-bff2-b73a353212c4", 
+                            json={"query": data.get("query")}, timeout=30)
+        return res.text
     except Exception as e:
-        return f"Error: {str(e)}"
-
-@app.route("/script.js")
-def serve_js():
-    return send_from_directory(".", "script.js", mimetype='application/javascript')
+        return str(e)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
