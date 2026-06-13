@@ -4,52 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Startup Insight Explorer</title>
-    <!-- Fixed CSS path for Render -->
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-    <!-- Top Left Ribbon/Bow decoration from your design -->
-    <div class="ribbon-decor">🎀</div>
+    <div class="main-wrapper">
+        <header class="main-header">
+            <h1>🚀 Startup Insight Explorer</h1>
+            <p>Your comprehensive portal for startup intelligence and analytics</p>
+        </header>
 
-    <div class="container">
-        <!-- Main Title and Subtitle -->
-        <h1>🚀 Startup Insight Explorer</h1>
-        <p class="subtitle">Your comprehensive portal for startup intelligence and analytics</p>
-        
-        <!-- Metrics Cards Section -->
-        <div class="metrics-container">
-            <div class="metric-card">
-                <h3>CORE STARTUPS TRACKED</h3>
-                <div class="metric-value">3</div>
+        <div class="stats-row">
+            <div class="stat-card">
+                <h3>Core Startups Tracked</h3>
+                <p id="events">3</p>
             </div>
-            <div class="metric-card">
-                <h3>TOTAL FUNDING RAISED</h3>
-                <div class="metric-value">$14.2M</div>
+            <div class="stat-card">
+                <h3>Total Funding Raised</h3>
+                <p id="sector">$14.2M</p>
             </div>
-            <div class="metric-card">
-                <h3>SYSTEM STATUS</h3>
-                <div class="metric-value status-online">Online</div>
+            <div class="stat-card">
+                <h3>System Status</h3>
+                <p id="status" style="color: #ff4d6d; font-size: 1.4rem; font-weight: bold; margin-top: 5px;">Online</p>
             </div>
         </div>
 
-        <!-- Chatbot Interface -->
-        <div class="chat-container">
-            <h2>💬 AI Startup Assistant</h2>
-            <p class="chat-subtitle">Ask real-time questions about Evotrex, Jedify, Niteshift, and more.</p>
+        <div class="dashboard-grid">
             
-            <div class="input-row">
-                <input type="text" id="userInput" placeholder="Ask about any startup...">
-                <button id="sendBtn">Ask AI</button>
+            <div class="panel-section chatbot-panel">
+                <h2>💬 AI Startup Assistant</h2>
+                <p class="panel-desc">Ask real-time questions about Evotrex, Jedify, Niteshift, and more.</p>
+                
+                <div class="input-group">
+                    <input type="text" id="question" placeholder="Ask about any startup...">
+                    <button id="askBtn">Ask AI</button>
+                </div>
+
+                <div id="report" class="display-box">
+                    <p class="placeholder-text">AI response will appear here...</p>
+                </div>
             </div>
 
-            <div class="chat-box" id="chatBox">
-                <div class="placeholder-text">AI response will appear here...</div>
-            </div>
         </div>
     </div>
 
-    <!-- Fixed JavaScript path for Render -->
     <script src="/script.js"></script>
 </body>
 </html>
