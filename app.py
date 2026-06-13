@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import requests
+import os
 
-# Fixed line: telling Flask to look for html/css/js in the main directory
-app = Flask(__name__, template_folder='.', static_folder='.')
+# Fixed static path configuration
+app = Flask(__name__, template_folder='.', static_folder='.', static_url_path='')
 
 N8N_CHATBOT_URL = "https://prachitee10.app.n8n.cloud/webhook/37030a1e-7f1a-4a38-bff2-b73a353212c4"
 
@@ -20,6 +21,16 @@ def ask_ai():
         return response.text
     except Exception as e:
         return f"Error connecting to AI Assistant: {str(e)}"
+
+# Foolproof custom route for style.css
+@app.route("/style.css")
+def serve_css():
+    return send_from_directory(os.path.abspath("."), "style.css", mimetype="text/css")
+
+# Foolproof custom route for script.js
+@app.route("/script.js")
+def serve_js():
+    return send_from_directory(os.path.abspath("."), "script.js", mimetype="application/javascript")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
