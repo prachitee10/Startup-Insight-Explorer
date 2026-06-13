@@ -3,51 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Startup Insight Explorer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Startup Funding Tracker & Insight Explorer</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <header class="main-header">
-            <h1>🚀 Startup Insight Explorer</h1>
-            <p>Your comprehensive portal for startup intelligence and analytics</p>
-        </header>
-
-        <div class="stats-row">
-            <div class="stat-card">
-                <h3>Core Startups Tracked</h3>
-                <p id="events">3</p>
+    <div class="container">
+        <h1>Startup Funding Tracker & Insight Explorer</h1>
+        
+        <div class="chat-container">
+            <div class="chat-box" id="chatBox">
+                <div class="message system-message">Welcome! Ask me anything about startup funding or trends.</div>
             </div>
-            <div class="stat-card">
-                <h3>Total Funding Raised</h3>
-                <p id="sector">$14.2M</p>
+            <div class="input-container">
+                <input type="text" id="userInput" placeholder="Ask about startups, funding, trends...">
+                <button id="sendBtn">Ask AI</button>
             </div>
-            <div class="stat-card">
-                <h3>System Status</h3>
-                <p id="status" style="color: #ff4d6d; font-size: 1.4rem; font-weight: bold; margin-top: 5px;">Online</p>
-            </div>
-        </div>
-
-        <div class="dashboard-grid">
-            
-            <div class="panel-section chatbot-panel">
-                <h2>💬 AI Startup Assistant</h2>
-                <p class="panel-desc">Ask real-time questions about Evotrex, Jedify, Niteshift, and more.</p>
-                
-                <div class="input-group">
-                    <input type="text" id="question" placeholder="Ask about any startup...">
-                    <button id="askBtn">Ask AI</button>
-                </div>
-
-                <div id="report" class="display-box">
-                    <p class="placeholder-text">AI response will appear here...</p>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
