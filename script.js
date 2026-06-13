@@ -14,7 +14,15 @@ document.getElementById("askBtn").addEventListener("click", async function () {
     `;
 
     try {
-        const response = await fetch(`/ask?q=${encodeURIComponent(question)}`);
+        // FIXED: Changed to POST method and added body data
+        const response = await fetch('/ask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `q=${encodeURIComponent(question)}`
+        });
+        
         const data = await response.text();
 
         reportElement.innerHTML = `
@@ -27,6 +35,6 @@ document.getElementById("askBtn").addEventListener("click", async function () {
         questionElement.value = "";
 
     } catch (error) {
-        reportElement.innerHTML += "<p style='color: #ff4d6d;'>Error connecting to AI backend.</p>";
+        reportElement.innerHTML = `<p style='color: #ff4d6d;'>Error: ${error.message}</p>`;
     }
 });
