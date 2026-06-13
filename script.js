@@ -3,16 +3,12 @@ document.getElementById("askBtn").addEventListener("click", async function () {
     const reportElement = document.getElementById("report");
     if (!question) return;
 
-    reportElement.innerHTML = "<p class='placeholder-text'>Thinking...</p>";
-    
+    reportElement.innerHTML = "Thinking...";
     const formData = new URLSearchParams();
     formData.append('q', question);
 
     try {
-        const response = await fetch('/ask', {
-            method: 'POST',
-            body: formData
-        });
+        const response = await fetch('/ask', { method: 'POST', body: formData });
         reportElement.innerHTML = await response.text();
     } catch (e) {
         reportElement.innerHTML = "Error connecting to AI.";
