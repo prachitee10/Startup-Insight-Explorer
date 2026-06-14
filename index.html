@@ -44,22 +44,27 @@
         </div>
         <div style="display: flex; gap: 10px;">
             <input type="text" id="question" placeholder="Ask about any startup...">
-            <button id="askBtn">Ask AI</button>
+            <button type="button" id="askBtn">Ask AI</button>
         </div>
         <div id="report" class="display-box">AI response will appear here...</div>
     </div>
 
     <script>
-        document.getElementById("askBtn").onclick = () => {
+        // Use an event listener instead of .onclick for better stability
+        document.getElementById("askBtn").addEventListener("click", function() {
             const q = document.getElementById("question").value;
             const r = document.getElementById("report");
-            if (!q) return;
             
-            // This is the static response to ensure your demo works perfectly
+            if (!q) {
+                alert("Please type a question!");
+                return;
+            }
+            
+            // This is the static response that works every time
             const aiResponse = "The current startup landscape is focused on cost-efficiency. Recent data shows companies are prioritizing practical solutions in housing and logistics, reflecting a market trend toward high-utility, low-cost services.";
 
-            r.innerHTML = `<strong>You asked:</strong> ${q}<br><br><strong>AI Insight:</strong> ${aiResponse}`;
-        };
+            r.innerHTML = "<strong>You asked:</strong> " + q + "<br><br><strong>AI Insight:</strong> " + aiResponse;
+        });
     </script>
 </body>
 </html>
