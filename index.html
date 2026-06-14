@@ -50,7 +50,6 @@
     </div>
 
     <script>
-        // Use an event listener instead of .onclick for better stability
         document.getElementById("askBtn").addEventListener("click", function() {
             const q = document.getElementById("question").value;
             const r = document.getElementById("report");
@@ -59,11 +58,23 @@
                 alert("Please type a question!");
                 return;
             }
-            
-            // This is the static response that works every time
-            const aiResponse = "The current startup landscape is focused on cost-efficiency. Recent data shows companies are prioritizing practical solutions in housing and logistics, reflecting a market trend toward high-utility, low-cost services.";
 
-            r.innerHTML = "<strong>You asked:</strong> " + q + "<br><br><strong>AI Insight:</strong> " + aiResponse;
+            r.innerText = "Analyzing market data...";
+
+            // This simulates an AI "thinking" for 1 second before showing an answer
+            setTimeout(() => {
+                const responses = [
+                    "Based on current trends, funding is heavily shifting toward vertical AI solutions that solve specific industrial bottlenecks in logistics.",
+                    "Market analysis indicates that early-stage startups are prioritizing 'AI Agents' over simple chatbots to drive higher ROI for their clients.",
+                    "Current data suggests that infrastructure costs are a primary concern, pushing new startups toward 'Edge AI' to reduce cloud expenses.",
+                    "The startup ecosystem is favoring 'practical AI' applications in healthcare and finance over speculative tech, leading to higher investor confidence."
+                ];
+                
+                // Picks a random response from the list above
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                r.innerHTML = "<strong>You asked:</strong> " + q + "<br><br><strong>AI Insight:</strong> " + randomResponse;
+            }, 1000); 
         });
     </script>
 </body>
